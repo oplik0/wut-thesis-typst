@@ -73,6 +73,7 @@
   self = utils.merge-dicts(
     self,
     config-common(freeze-slide-counter: true),
+    config-page(margin: 0em),
   )
   let info = self.info + args.named()
   info.authors = {
@@ -88,41 +89,62 @@
     }
   }
   let body = {
-    if info.logo != none {
-      place(right, text(fill: self.colors.primary, info.logo))
-    }
-    align(
-      center + horizon,
-      {
-        block(
-          inset: 0em,
-          breakable: false,
+    // Colorful vertical slices background
+    place(
+      top + left,
+      grid(
+        columns: (70%, 25%, 5%),
+        rows: 100%,
+        block(width: 100%, height: 100%, fill: self.colors.primary,
+          // Main content
+          align(
+            center + horizon,
+            {
+              block(
+                inset: 2em,
+                breakable: false,
+                {
+                  text(size: 2em, fill: self.colors.neutral-lightest, weight: "bold", info.title)
+                  if info.subtitle != none {
+                    parbreak()
+                    text(size: 1.2em, fill: self.colors.neutral-lightest.darken(10%), info.subtitle)
+                  }
+                },
+              )
+              set text(size: .8em, fill: self.colors.neutral-lightest)
+              grid(
+                columns: (1fr,) * calc.min(info.authors.len(), 3),
+                column-gutter: 1em,
+                row-gutter: 1em,
+                ..info.authors.map(author => text(fill: self.colors.neutral-lightest, author))
+              )
+              v(1em)
+              if info.institution != none {
+                parbreak()
+                text(size: .9em, fill: self.colors.neutral-lightest, info.institution)
+              }
+              if info.date != none {
+                parbreak()
+                text(size: .8em, fill: self.colors.neutral-lightest.darken(15%), utils.display-info-date(self))
+              }
+            },
+          )
+        ),
+        block(width: 100%, height: 100%, fill: self.colors.secondary,
           {
-            text(size: 2em, fill: self.colors.primary, weight: "bold", info.title)
-            if info.subtitle != none {
-              parbreak()
-              text(size: 1.2em, fill: self.colors.primary, info.subtitle)
+            if info.logo != none and info.logo.source == "../assets/logo_wut.svg" {
+              place(top + center,dy: 1em, text(fill: self.colors.neutral-lightest, stroke: self.colors.neutral-lightest, image("../assets/logo_wut_white.svg")))
+            } else if info.logo != none {
+              place(top + center,dy: 1em, text(fill: self.colors.neutral-lightest, stroke: self.colors.neutral-lightest, info.logo))
             }
-          },
-        )
-        set text(size: .8em)
-        grid(
-          columns: (1fr,) * calc.min(info.authors.len(), 3),
-          column-gutter: 1em,
-          row-gutter: 1em,
-          ..info.authors.map(author => text(fill: self.colors.neutral-darkest, author))
-        )
-        v(1em)
-        if info.institution != none {
-          parbreak()
-          text(size: .9em, info.institution)
-        }
-        if info.date != none {
-          parbreak()
-          text(size: .8em, utils.display-info-date(self))
-        }
-      },
+          }
+        ),
+        block(width: 100%, height: 100%, fill: self.colors.tertiary),
+      )
     )
+    // Logo in top right
+    
+    
   }
   touying-slide(self: self, body)
 })
@@ -143,19 +165,23 @@
 #let wut-presentation(
   aspect-ratio: "16-9",
   progress-bar: true,
-  footer-columns: (25%, 1fr, 25%),
-  footer-a: self => self.info.author,
-  footer-b: self => if self.info.short-title == auto {
-    self.info.title
-  } else {
-    self.info.short-title
+  footer-columns: (70%, 25%, 5%),
+  footer-a: self => {
+    grid(columns: (1fr, 2fr),
+      self.info.author,
+      {
+        if self.info.short-title == auto {
+          self.info.title
+        } else {
+          self.info.short-title
+        }
+      }
+    )
+
   },
+  footer-b: self => utils.display-info-date(self),
   footer-c: self => {
-    h(1fr)
-    utils.display-info-date(self)
-    h(1fr)
     context utils.slide-counter.display() + " / " + utils.last-slide-number
-    h(1fr)
   },
   ..args,
   body,
