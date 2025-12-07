@@ -183,6 +183,7 @@
   footer-c: self => {
     context utils.slide-counter.display() + " / " + utils.last-slide-number
   },
+  font: "New Computer Modern",
   ..args,
   body,
 ) = {
@@ -198,7 +199,7 @@
     ),
     config-methods(
       init: (self: none, body) => {
-        set text(size: 20pt, font: "New Computer Modern")
+        set text(size: 20pt, font: font)
         show heading.where(level: 3): set text(fill: self.colors.primary)
         show heading.where(level: 4): set text(fill: self.colors.primary)
         body
@@ -219,6 +220,7 @@
       footer-a: footer-a,
       footer-b: footer-b,
       footer-c: footer-c,
+      font: font,
     ),
     config-info(
       logo: image("../assets/logo_wut.svg"),
