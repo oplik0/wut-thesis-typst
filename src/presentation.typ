@@ -162,6 +162,80 @@
   touying-slide(self: self, align(horizon + center, body))
 })
 
+#let new-section-slide(config: (:), level: 1, numbered: true, body, ..args) = touying-slide-wrapper(self => {
+  self = utils.merge-dicts(
+    self,
+    config,
+    config-common(freeze-slide-counter: true),
+    config-page(margin: 0em),
+  )
+  let info = self.info + args.named()
+  let slide-body = {
+    // Colorful vertical slices background - secondary dominant
+    place(
+      top + left,
+      grid(
+        columns: (25%, 70%, 5%),
+        rows: 100%,
+        block(width: 100%, height: 100%, fill: self.colors.primary,
+        {
+            if info.logo != none and info.logo.source == "../assets/logo_wut.svg" {
+              place(top + center,dy: 1em, text(fill: self.colors.neutral-lightest, stroke: self.colors.neutral-lightest, image("../assets/logo_wut_white.svg")))
+            } else if info.logo != none {
+              place(top + center,dy: 1em, text(fill: self.colors.neutral-lightest, stroke: self.colors.neutral-lightest, info.logo))
+            }
+        }
+        ),
+        block(width: 100%, height: 100%, fill: self.colors.secondary,
+          // Main content - section heading
+          align(
+            center + horizon,
+            {
+              set text(size: 1.8em, fill: self.colors.neutral-lightest, weight: "bold")
+              block(
+                inset: 2em,
+                breakable: false,
+                {
+                  utils.display-current-heading(level: level, numbered: numbered)
+                  v(0.5em)
+                  // Progress bar
+                  block(
+                    height: 4pt,
+                    width: 80%,
+                    spacing: 0pt,
+                    components.progress-bar(
+                      height: 4pt,
+                      self.colors.neutral-lightest,
+                      self.colors.neutral-lightest.darken(30%),
+                    ),
+                  )
+                }
+              )
+            },
+          )
+        ),
+        block(width: 100%, height: 100%, fill: self.colors.tertiary),
+      )
+    )
+    body
+  }
+  touying-slide(self: self, slide-body)
+})
+
+#let matrix-slide(config: (:), columns: none, rows: none, ..bodies) = touying-slide-wrapper(self => {
+  self = utils.merge-dicts(
+    self,
+    config,
+    config-common(freeze-slide-counter: true),
+    config-page(margin: 0em),
+  )
+  touying-slide(
+    self: self,
+    composer: components.checkerboard.with(columns: columns, rows: rows),
+    ..bodies,
+  )
+})
+
 #let wut-presentation(
   aspect-ratio: "16-9",
   progress-bar: true,
@@ -196,6 +270,7 @@
     ),
     config-common(
       slide-fn: slide,
+      new-section-slide-fn: new-section-slide,
     ),
     config-methods(
       init: (self: none, body) => {
