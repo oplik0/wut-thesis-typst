@@ -131,11 +131,6 @@
   let linguify-database = toml("lang.toml")
   lang-database.update(linguify-database)
 
-  let draft-string = ""
-  if draft {
-    draft-string = "DRAFT - "
-  }
-
   // global text settings
   set text(
     lang: lang.thesis,
@@ -151,7 +146,7 @@
 
   // set the line spacing (pl. interlinia)
   set par(leading: .8em, first-line-indent: 0.5cm, justify: true)
-  set document(author: author, title: draft-string + thesis-title)
+  set document(author: author, title: thesis-title)
 
   let printing-offset = if in-print { 5mm } else { 0mm }
 
@@ -176,7 +171,6 @@
     titlepage(
       titlepage-info,
       author,
-      thesis-title,
       lang.studies,
       linguify-database,
       in-print,

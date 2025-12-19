@@ -51,7 +51,7 @@
   }
 }
 
-#let titlepage(info, author, title, lang, linguify-database, in-print, faculties) = {
+#let titlepage(info, author, lang, linguify-database, in-print, faculties) = {
   assert(
     faculties.keys().contains(info.faculty),
     message: "Unsupported faculty: "
@@ -71,6 +71,8 @@
   let advisor_present = info.advisor != none
   let l(key) = linguify(key, from: linguify-database, lang: lang)
 
+  show title: set block(above: 4em, below: 4em)
+  show title: set text(size: 14pt, weight: "regular")
   set text(size: 12pt, font: "TeX Gyre Heros")
   set par(leading: 0.65em, first-line-indent: 0em, justify: false)
   set block(below: 0em, above: 0em)
@@ -106,9 +108,7 @@
       block[#l("program") #info.program]
       linebreak()
       block[#l("specialisation") #info.specialisation]
-      v(4em)
-      text(size: 14pt, title)
-      v(4em)
+      title()
       text(size: 21pt, author)
       linebreak()
       v(.8em)
