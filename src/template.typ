@@ -313,14 +313,14 @@
   show link: it => {
     if not in-print and type(it.dest) == str {
       // Style links to strings blue
-      text(fill: if draft {blue} else {rgb("#0099A1").saturate(150%)}, it)
+      text(fill: if draft {blue} else {rgb("#007e7f")}, it)
     } else {
       // Return other links as usual
       it
     }
   }
-  show ref: set text(fill: rgb("#823C84").saturate(150%)) if not in-print
-  show cite: set text(fill: rgb("#D58A16").saturate(150%)) if not in-print
+  show ref: set text(fill: rgb("#853da7")) if not in-print
+  show cite: set text(fill: rgb("#9b4c00")) if not in-print
 
 
   // Draft Settings
