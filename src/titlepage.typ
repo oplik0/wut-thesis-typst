@@ -47,7 +47,7 @@
         align(center + bottom, wut),
         align(center + top, faculty-text-tracked),
       )),
-      image("../assets/logo_wut.svg", width: 25mm),
+      image("../assets/logo_wut.svg", alt: "Warsaw University of Technology logo", width: 25mm),
     ))
   }
 }
