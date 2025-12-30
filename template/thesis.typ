@@ -98,7 +98,12 @@
   // --- Custom Settings ---
   // if you want to override any settings from the template here is the place to do so,
   // e.g.:
+  // Use Comic Sans Font
   // set text(font: "Comic Sans MS")
+  // Use nicer microtypography
+  set par(justification-limits: (
+    tracking: (min: -0.01em, max: 0.02em),
+  ))
 
 
   // --- Main Chapters ---
