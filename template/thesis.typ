@@ -129,10 +129,10 @@
   glossary-outline(glossary)
 
   // List of figures - comment out, if not needed.
-  figure-outline()
+  figure-outline(lang.thesis)
 
   // List of tables - comment out, if not needed.
-  table-outline()
+  table-outline(lang.thesis)
 
   // --- Appendices ---
   // Comment out if not needed.

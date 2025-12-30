@@ -6,7 +6,7 @@
 #import hydra: hydra
 
 #let in-outline = state("in-outline", false)
-#let lang-database = state("linguify-db", none)
+#let lang-database = toml("lang.toml")
 
 #let faculties = (
     pl: (
@@ -130,9 +130,6 @@
     assert(lang_ in ("en", "pl"), message: "Supported languages are pl or en")
   }
 
-  let linguify-database = toml("lang.toml")
-  lang-database.update(linguify-database)
-
   // global text settings
   set text(
     lang: lang.thesis,
@@ -174,7 +171,7 @@
       titlepage-info,
       author,
       lang.studies,
-      linguify-database,
+      lang-database,
       in-print,
       faculties.at(lang.studies),
     )
@@ -188,7 +185,7 @@
       abstract.at(lang_),
       keywords.at(lang_),
       lang_,
-      linguify-database,
+      lang-database,
     )
   }
 
@@ -266,7 +263,7 @@
 
   show heading.where(level: 1): set heading(supplement: linguify(
     "chapter",
-    from: linguify-database,
+    from: lang-database,
     lang: lang.thesis,
   ))
   show heading.where(level: 1): it => {
@@ -332,20 +329,16 @@
   body
 }
 
-#let figure-outline() = {
-  context {
+#let figure-outline(lang) = {
     outline(
-      title: linguify("figure-outline", from: lang-database.get()),
+      title: linguify("figure-outline", from: lang-database, lang: lang),
       target: figure.where(kind: image),
     )
-  }
 }
 
-#let table-outline() = {
-  context {
+#let table-outline(lang) = {
     outline(
-      title: linguify("table-outline", from: lang-database.get()),
+      title: linguify("table-outline", from: lang-database, lang: lang),
       target: figure.where(kind: table),
     )
-  }
 }
