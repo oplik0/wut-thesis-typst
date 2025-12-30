@@ -1,4 +1,4 @@
-#import "@preview/wut-thesis:0.1.1"
+#import "@preview/wut-thesis:0.2.0"
 #import "@preview/glossarium:0.5.9"
 #import "@preview/drafting:0.2.2"
 #import "@preview/lovelace:0.3.0"
