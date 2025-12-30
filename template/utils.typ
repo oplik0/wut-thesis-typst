@@ -1,6 +1,7 @@
-#import "@preview/drafting:0.2.2": inline-note
-#import "@preview/glossarium:0.5.8": print-glossary
-#import "@preview/lovelace:0.3.0": *
+#import "requirements.typ": glossarium, drafting, lovelace
+#import drafting: inline-note
+#import glossarium: print-glossary
+#import lovelace: pseudocode-list
 
 #let glossary-outline(glossary) = {
   context {

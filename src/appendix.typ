@@ -1,4 +1,5 @@
-#import "@preview/linguify:0.4.2": *
+#import "requirements.typ": linguify
+#import linguify: linguify
 
 // --- Appendices styling settings ---
 // You probably shouldn't modify these settings unless you know what you are doing

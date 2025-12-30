@@ -1,4 +1,5 @@
-#import "@preview/linguify:0.4.2": *
+#import "requirements.typ": linguify
+#import linguify: linguify
 #let wut-font = "Adagio_Slab"
 
 #let missing-font-placeholder(content) = {

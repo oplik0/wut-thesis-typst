@@ -1,7 +1,9 @@
 #import "titlepage.typ": *
 #import "abstract.typ": *
-#import "@preview/hydra:0.6.1": hydra
-#import "@preview/linguify:0.4.2": *
+#import "requirements.typ": linguify
+#import linguify: linguify
+#import "requirements.typ": hydra
+#import hydra: hydra
 
 #let in-outline = state("in-outline", false)
 #let lang-database = state("linguify-db", none)
