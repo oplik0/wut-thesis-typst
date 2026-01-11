@@ -140,34 +140,34 @@
       } else {
         if lang == "pl" { "Raport" } else { "Report" }
       }
-      text(size: 14pt, weight: "semibold")[#type-label]
+      text(size: font-size*1.5, weight: "semibold")[#type-label]
       v(0.5em)
     }
     
     // Course/project name
     if course != none {
-      text(size: 12pt)[#course]
+      text(size: font-size * 1.1)[#course]
       v(0.3em)
     }
     
     // Title
-    text(size: if is-formal { 18pt } else { 16pt }, weight: "bold")[#title]
+    text(size: if is-formal { font-size * 1.5 } else { font-size * 1.4 }, weight: "bold")[#title]
     v(1em)
     
     // Author(s)
     if type(author) == array {
       for a in author {
-        text(size: 12pt)[#a]
+        text(size: font-size * 1.1)[#a]
         linebreak()
       }
     } else {
-      text(size: 12pt)[#author]
+      text(size: font-size * 1.1)[#author]
     }
     v(0.5em)
     
     // Instructor
     if instructor != none {
-      text(size: 11pt, style: "italic")[
+      text(size: font-size, style: "italic")[
         #if lang == "pl" { "Prowadzący: " } else { "Instructor: " }#instructor
       ]
       v(0.3em)
@@ -177,9 +177,9 @@
     if date != none {
       v(0.5em)
       if type(date) == datetime {
-        text(size: 11pt)[#date.display("[day] [month repr:long] [year]")]
+        text(size: font-size)[#date.display("[day] [month repr:long] [year]")]
       } else {
-        text(size: 11pt)[#date]
+        text(size: font-size)[#date]
       }
     }
     
