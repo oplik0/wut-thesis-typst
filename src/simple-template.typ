@@ -37,6 +37,8 @@
   font: "New Computer Modern",
   /// Font size
   font-size: 11pt,
+  /// Logo (set to true to use default)
+  logo: none,
   body,
 ) = {
   // Validate doc-type
@@ -123,7 +125,14 @@
   // Title page section
   {
     set align(center)
-    
+    if logo != none and logo != false {
+      if logo == true {
+            image("../assets/logo_wut.svg", width: 25mm)
+        } else {
+            logo
+        }
+        v(1.5em)
+    }
     // Document type heading
     if is-formal {
       let type-label = if doc-type == "project" {
