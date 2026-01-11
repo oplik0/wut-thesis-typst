@@ -1,6 +1,7 @@
 #import "@preview/hydra:0.6.1": hydra
 #import "@preview/linguify:0.4.2": *
 
+#let wut-font = "Adagio_Slab"
 #let in-outline = state("in-outline", false)
 #let lang-database = state("linguify-db", none)
 
@@ -39,6 +40,8 @@
   font-size: 11pt,
   /// Logo (set to true to use default)
   logo: none,
+  /// Font for the title (set to auto to use WUT font if available)
+  title-font: auto,
   body,
 ) = {
   // Validate doc-type
@@ -134,24 +137,41 @@
         v(1.5em)
     }
     // Document type heading
+    let wut-font-stack = (wut-font,) + if type(font) == array { font } else { (font,) }
     if is-formal {
       let type-label = if doc-type == "project" {
         if lang == "pl" { "Projekt" } else { "Project" }
       } else {
         if lang == "pl" { "Raport" } else { "Report" }
       }
-      text(size: font-size*1.5, weight: "semibold")[#type-label]
+      text(
+        font: wut-font-stack,
+        size: font-size * 1.5,
+        weight: "semibold",
+      )[#type-label]
       v(0.5em)
     }
-    
+
     // Course/project name
     if course != none {
-      text(size: font-size * 1.1)[#course]
+      text(
+        font: wut-font-stack,
+        size: font-size * 1.1,
+      )[#course]
       v(0.3em)
     }
-    
+
     // Title
-    text(size: if is-formal { font-size * 1.5 } else { font-size * 1.4 }, weight: "bold")[#title]
+    let effective-title-font = if title-font == auto {
+      wut-font-stack
+    } else {
+      title-font
+    }
+    text(
+      font: effective-title-font,
+      size: if is-formal { font-size * 1.5 } else { font-size * 1.4 },
+      weight: "bold",
+    )[#title]
     v(1em)
     
     // Author(s)
