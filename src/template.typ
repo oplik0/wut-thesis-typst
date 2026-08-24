@@ -1,10 +1,12 @@
 #import "titlepage.typ": *
 #import "abstract.typ": *
-#import "@preview/hydra:0.6.1": hydra
-#import "@preview/linguify:0.4.2": *
+#import "requirements.typ": linguify
+#import linguify: linguify
+#import "requirements.typ": hydra
+#import hydra: hydra
 
 #let in-outline = state("in-outline", false)
-#let lang-database = state("linguify-db", none)
+#let lang-database = toml("lang.toml")
 
 #let faculties = (
     pl: (
@@ -128,14 +130,6 @@
     assert(lang_ in ("en", "pl"), message: "Supported languages are pl or en")
   }
 
-  let linguify-database = toml("lang.toml")
-  lang-database.update(linguify-database)
-
-  let draft-string = ""
-  if draft {
-    draft-string = "DRAFT - "
-  }
-
   // global text settings
   set text(
     lang: lang.thesis,
@@ -151,7 +145,7 @@
 
   // set the line spacing (pl. interlinia)
   set par(leading: .8em, first-line-indent: 0.5cm, justify: true)
-  set document(author: author, title: draft-string + thesis-title)
+  set document(author: author, title: thesis-title)
 
   let printing-offset = if in-print { 5mm } else { 0mm }
 
@@ -176,9 +170,8 @@
     titlepage(
       titlepage-info,
       author,
-      thesis-title,
       lang.studies,
-      linguify-database,
+      lang-database,
       in-print,
       faculties.at(lang.studies),
     )
@@ -192,7 +185,7 @@
       abstract.at(lang_),
       keywords.at(lang_),
       lang_,
-      linguify-database,
+      lang-database,
     )
   }
 
@@ -270,7 +263,7 @@
 
   show heading.where(level: 1): set heading(supplement: linguify(
     "chapter",
-    from: linguify-database,
+    from: lang-database,
     lang: lang.thesis,
   ))
   show heading.where(level: 1): it => {
@@ -319,14 +312,14 @@
   show link: it => {
     if not in-print and type(it.dest) == str {
       // Style links to strings blue
-      text(fill: if draft {blue} else {rgb("#0099A1").saturate(150%)}, it)
+      text(fill: if draft {blue} else {rgb("#007e7f")}, it)
     } else {
       // Return other links as usual
       it
     }
   }
-  show ref: set text(fill: rgb("#823C84").saturate(150%)) if not in-print
-  show cite: set text(fill: rgb("#D58A16").saturate(150%)) if not in-print
+  show ref: set text(fill: rgb("#853da7")) if not in-print
+  show cite: set text(fill: rgb("#9b4c00")) if not in-print
 
 
   // Draft Settings
@@ -336,20 +329,16 @@
   body
 }
 
-#let figure-outline() = {
-  context {
+#let figure-outline(lang) = {
     outline(
-      title: linguify("figure-outline", from: lang-database.get()),
+      title: linguify("figure-outline", from: lang-database, lang: lang),
       target: figure.where(kind: image),
     )
-  }
 }
 
-#let table-outline() = {
-  context {
+#let table-outline(lang) = {
     outline(
-      title: linguify("table-outline", from: lang-database.get()),
+      title: linguify("table-outline", from: lang-database, lang: lang),
       target: figure.where(kind: table),
     )
-  }
 }

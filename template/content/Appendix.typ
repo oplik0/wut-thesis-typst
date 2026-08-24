@@ -1,5 +1,6 @@
 #import "../utils.typ": todo, silentheading, flex-caption
-#import "@preview/cheq:0.2.2": checklist
+#import "../requirements.typ": wut-thesis, cheq
+#import cheq: checklist
 
 #show: checklist
 

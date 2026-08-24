@@ -1,9 +1,10 @@
 #{
-  import "@preview/wut-thesis:0.1.1": wut-thesis, acknowledgements, figure-outline, table-outline, appendix
+  import "requirements.typ": wut-thesis, glossarium, drafting
+  import wut-thesis: wut-thesis, acknowledgements, figure-outline, table-outline, appendix
   import "utils.typ": flex-caption-styles, todo, glossary-outline
   import "glossary.typ": glossary
-  import "@preview/glossarium:0.5.8": make-glossary, register-glossary
-  import "@preview/drafting:0.2.2": note-outline, set-margin-note-defaults
+  import glossarium: make-glossary, register-glossary
+  import drafting: note-outline, set-margin-note-defaults
 
   show: make-glossary
   register-glossary(glossary)
@@ -97,7 +98,12 @@
   // --- Custom Settings ---
   // if you want to override any settings from the template here is the place to do so,
   // e.g.:
+  // Use Comic Sans Font
   // set text(font: "Comic Sans MS")
+  // Use nicer microtypography
+  set par(justification-limits: (
+    tracking: (min: -0.01em, max: 0.02em),
+  ))
 
 
   // --- Main Chapters ---
@@ -128,10 +134,10 @@
   glossary-outline(glossary)
 
   // List of figures - comment out, if not needed.
-  figure-outline()
+  figure-outline(lang.thesis)
 
   // List of tables - comment out, if not needed.
-  table-outline()
+  table-outline(lang.thesis)
 
   // --- Appendices ---
   // Comment out if not needed.

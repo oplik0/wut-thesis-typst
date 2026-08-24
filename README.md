@@ -43,7 +43,7 @@ repository. For further information on adding fonts to your project, please refe
 1. Download `PW_Adagio_Slab.zip` from [WUT's intranet](https://intranet.pw.edu.pl/promocja/Shared%20Documents/Identyfikacja%20wizualna/Kroje%20pism) (login with pw.edu.pl outlook credentials).
 2. Install `Adagio_Slab` fonts via your operating system. Note that if a compiler is
    working in a watch mode, you must stop it and rerun it.
-3. In case of `unknown font family: TeX Gyre Heros` warning you also need to install
+3. In case of `unknown font family: TeX Gyre Heros` warning you need to install
    this font as well:
     * Download the font archive from
       [here](https://www.gust.org.pl/projects/e-foundry/tex-gyre/heros) (link described
@@ -86,11 +86,12 @@ using this template, you can refer to the following repositories:
 
 ## Good practices
 * Save your generated graphics (e.g., graphs) in the vector form (as `.svg`)
-* Consider optimizing your image files, for example by using [`svgo`](https://svgo.dev/), [`jpegoptim`](https://github.com/tjko/jpegoptim) or [`oxipng`](https://github.com/oxipng/oxipng):
+* Consider optimizing your image files, for example by using [`svgo`](https://svgo.dev/), [`jpegoptim`](https://github.com/tjko/jpegoptim), [`oxipng`](https://github.com/oxipng/oxipng) or [`pdfcpu`](https://github.com/pdfcpu/pdfcpu):
     ```bash
     svgo my-file.svg
     jpegoptim my-file.jpg
     oxipng my-file.png
+    pdfcpu optimize my-file.pdf
     ```
     Likewise, optimize your thesis file prior to the final hand in, for example by using
     [`pdfcpu`](https://github.com/pdfcpu/pdfcpu):
@@ -98,14 +99,10 @@ using this template, you can refer to the following repositories:
     pdfcpu optimize thesis.pdf
     ```
 
-## Limitations
-Currently one of the biggest limitations of Typst is the [inability to add PDF
-figures](https://github.com/typst/typst/issues/145). To mitigate this problem save
-your graphics in the `.svg` format. If for some reason you need to insert a PDF file then you
-can convert it to SVG using [inkscape](https://inkscape.org/) with the following command:
-```bash
-inkscape --without-gui --file=my-file.pdf --export-plain-svg=my-file.svg
-```
+## Accessibility
+This template is fully compliant with PDF/UA-1 standard. However, the example thesis
+does not compile under this standard, as it lacks `alt` entries in images and math
+formulaes. To see more please read [the accessibility guide](https://typst.app/docs/guides/accessibility/).
 
 ## Problems and Contributions
 In case of any problems/feature requests, please open an issue or PR in the project's

@@ -2,8 +2,8 @@
   algorithm, code-listing-figure, code-listing-file, comment, flex-caption,
   silentheading, todo,
 )
-#import "@preview/wrap-it:0.1.1": wrap-content
-#import "@preview/wut-thesis:0.1.1": faculties
+#import "../requirements.typ": wut-thesis, meander
+#import wut-thesis: faculties
 
 = Tutorial <Tutorial>
 #todo[Exclude this chapter!]
@@ -78,21 +78,24 @@ reference to this chapter: @Tutorial. And this is a reference to a label from a
 different chapter: @supplementary (it just works). If you want to customize the supplement text you
 can do so in such a way: "W @Tutorial[Rozdziale] znajduje się poradnik".
 
-#figure(image("../images/cat1.png", width: 60%), caption: flex-caption(
+#let my-fig = figure(image("../images/cat1.png", width: 60%), caption: flex-caption(
   [This is a #strike[caption] beautiful cat named Miss Moneypenny ],
   [Picture of Miss Moneypenny (short description of the image for the list of figures)],
-))<cat_figure>
+))
+#my-fig <cat_figure>
 
+=== Wrap text around image
+#meander.reflow({
+  import meander: *
 
-=== Wrap-Content
-#wrap-content(
-  [#figure(image("../images/cat2.svg"), caption: [another caption])],
-  [
+  placed(top + right, boundary: contour.margin(5mm), figure(image("../images/cat2.svg"), caption: [another caption]))
+
+  container()
+  content[
+    #set par(justify: true)
     #lorem(100)
-
-  ],
-  align: right,
-)
+  ]
+})
 
 
 

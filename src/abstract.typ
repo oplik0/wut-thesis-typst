@@ -1,4 +1,5 @@
-#import "@preview/linguify:0.4.2": *
+#import "requirements.typ": linguify
+#import linguify: linguify
 
 #let abstract-page(title, body, keywords, lang, database) = {
   align(center, text(1.4em, weight: 600, hyphenate: false, title))
